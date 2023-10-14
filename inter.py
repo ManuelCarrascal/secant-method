@@ -10,7 +10,6 @@ from metodo_secante import metodo_secante
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas, NavigationToolbar2QT as NavigationToolbar
 from plot_canvas import PlotCanvas 
 from ui import initUI  
-
 import numpy as np
 
 class MetodoSecanteApp(QMainWindow):
@@ -80,7 +79,6 @@ class MetodoSecanteApp(QMainWindow):
         alert.setWindowTitle("Alerta")
         alert.setText(mensaje)
         alert.exec_()
-
 
     def guardar_csv(self):
         """
