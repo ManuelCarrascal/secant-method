@@ -8,17 +8,24 @@ from PyQt5.QtGui import QIcon, QFont, QCursor
 from utils import guardar_csv, mostrar_alerta, mostrar_manual, verificar_metodo_adecuado
 from metodo_secante import metodo_secante
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas, NavigationToolbar2QT as NavigationToolbar
-from plot_canvas import PlotCanvas  # Modifica esta línea para importar la clase PlotCanvas desde el nuevo archivo
-from ui import initUI  # Importa la función initUI desde ui_config.py
+from plot_canvas import PlotCanvas 
+from ui import initUI  
 
 import numpy as np
 
 class MetodoSecanteApp(QMainWindow):
+    """
+    Clase que representa la aplicación de la interfaz gráfica de usuario para el método de la secante.
+    """
     def __init__(self):
         super().__init__()
         initUI(self)
 
     def calcular(self):
+        """
+        Función que se ejecuta cuando se presiona el botón "Calcular".
+        Obtiene los valores ingresados por el usuario y ejecuta el método de la secante para encontrar la raíz de la función.
+        """
         expresion = self.input_funcion.text()
         x0_text = self.input_x0.text()
         x1_text = self.input_x1.text()
@@ -54,7 +61,7 @@ class MetodoSecanteApp(QMainWindow):
         f = sp.sympify(expresion)
 
         if verificar_metodo_adecuado(self,f, x0, x1):
-            tabla_secante, x_vals, f_vals = metodo_secante(self, f, x0, x1, tol, max_iter=49)
+            tabla_secante, x_vals, f_vals = metodo_secante(self, f, x0, x1, tol, max_iter=40)
             self.resultado_table.setRowCount(len(tabla_secante))
             for i, fila in enumerate(tabla_secante):
                 for j, valor in enumerate(fila):
@@ -65,6 +72,9 @@ class MetodoSecanteApp(QMainWindow):
             self.mostrar_alerta("El método de la secante no es adecuado para esta función y/o valores iniciales.")
 
     def mostrar_alerta(self, mensaje):
+        """
+        Función que muestra una alerta con el mensaje especificado.
+        """
         alert = QMessageBox(self)
         alert.setIcon(QMessageBox.Warning)
         alert.setWindowTitle("Alerta")
@@ -73,6 +83,9 @@ class MetodoSecanteApp(QMainWindow):
 
 
     def guardar_csv(self):
+        """
+        Función que guarda los resultados de la tabla en un archivo CSV.
+        """
         guardar_csv(self.resultado_table)
 
 if __name__ == "__main__":

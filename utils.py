@@ -6,6 +6,15 @@ import sympy as sp
 
 
 def guardar_csv(resultado_table):
+    """
+    Guarda los datos de una tabla en un archivo CSV.
+
+    Args:
+        resultado_table (QTableWidget): La tabla que contiene los datos a guardar.
+
+    Returns:
+        None
+    """
     if resultado_table.rowCount() == 0:
         mostrar_alerta("No hay datos para guardar.")
         return
@@ -35,76 +44,143 @@ def guardar_csv(resultado_table):
         mostrar_alerta("Datos guardados en CSV correctamente.")
 
 def mostrar_alerta(mensaje):
+    """
+    Muestra una alerta con un mensaje.
+
+    Args:
+        mensaje (str): El mensaje a mostrar en la alerta.
+
+    Returns:
+        None
+    """
     alert = QMessageBox()
     alert.setIcon(QMessageBox.Warning)
     alert.setWindowTitle("Alerta")
     alert.setText(mensaje)
     alert.exec_()
 
+from PyQt5.QtWidgets import QScrollArea
+
 def mostrar_manual(self):
-        manual_dialog = QDialog(self)
-        manual_dialog.setWindowTitle("Manual de Usuario")
-        screen = QDesktopWidget().availableGeometry()
-        manual_dialog.setGeometry(100, 100, 600, min(400, screen.height()))
-        manual_layout = QVBoxLayout()
+    """
+    Muestra un diálogo con el manual de usuario de la aplicación.
 
-        font = QFont()
-        font.setPointSize(12)
+    Args:
+        self: La instancia de la clase que llama a la función.
 
-        manual_text = """
-         **MANUAL DE USUARIO DE LA APP DEL METODO DE LA SECANTE.**
+    Returns:
+        None
+    """
+    manual_dialog = QDialog(self)
+    manual_dialog.setWindowTitle("Manual de Usuario")
+    screen = QDesktopWidget().availableGeometry()
+    manual_dialog.setGeometry(100, 100, 600, min(400, screen.height()))
+    manual_layout = QVBoxLayout()
 
-         **Cómo ingresar ecuaciones**
+    font = QFont()
+    font.setPointSize(12)
 
-        Para ingresar una ecuación, sigue estas pautas:
+    manual_text = """
+     MANUAL DE USUARIO DE LA APP DEL METODO DE LA SECANTE.
 
-        1. *Operadores matemáticos y funciones*: Utiliza operadores matemáticos estándar como `+`, `-`, `*`, `/` y `**` (para exponentes).
-        También puedes utilizar funciones matemáticas comunes como `sin()`, `cos()`, `tan()`, `exp()`, `log()`, `sqrt()`, etc. 
-        Asegúrate de que las funciones se escriban con paréntesis, por ejemplo, `sin(x)`.
+    ¿CÓMO INGRESAR ECUACIONES?
 
-        2. *Fracciones*: Para ingresar una fracción, utiliza `/`, por ejemplo, `1/3` para representar un tercio.
+    Para ingresar una ecuación, sigue estas pautas:
 
-        3. *Potencias*: Utiliza el operador `**` para expresar potencias. Por ejemplo, `x**2` representa x al cuadrado.
+    1. Operadores matemáticos y funciones: Utiliza operadores matemáticos estándar como `+`, `-`, `*`, `/` y `**` (para exponentes).
+    También puedes utilizar funciones matemáticas comunes como `sin()`, `cos()`, `tan()`, `exp()`, `log()`, `sqrt()`, etc. 
+    Asegúrate de que las funciones se escriban con paréntesis, por ejemplo, `sin(x)`.
 
-        4. *Paréntesis*: Puedes utilizar paréntesis para establecer el orden de las operaciones en la ecuación. Por ejemplo, `(x + 2) * (x - 1)`.
+    2. Fracciones: Para ingresar una fracción, utiliza `/`, por ejemplo, `1/3` para representar un tercio.
 
-        **Ejemplos de ecuaciones**
+    3. Potencias: Utiliza el operador `**` para expresar potencias. Por ejemplo, `x**2` representa x al cuadrado.
 
-        Aquí tienes algunos ejemplos de ecuaciones y cómo deberían ingresarse:
+    4. Paréntesis: Puedes utilizar paréntesis para establecer el orden de las operaciones en la ecuación. Por ejemplo, `(x + 2) * (x - 1)`.
 
-        - Ecuación: 2x + sin(x)
-        - Entrada: `2*x + sin(x)`
+    EJEMPLOS DE ECUACIONES
 
-        - Ecuación cuadrática: x^2 - 4
-        - Entrada: `x**2 - 4`
+    Aquí tienes algunos ejemplos de ecuaciones y cómo deberían ingresarse:
 
-        - Ecuación con fracción: (1/3)x + 5
-        - Entrada: `(1/3)*x + 5`
+    - Ecuación: 2x + sin(x)
+    - Entrada: `2*x + sin(x)`
 
-        - Ecuación con paréntesis: (x + 2)(x - 1)
-        - Entrada: `(x + 2)*(x - 1)`
+    - Ecuación cuadrática: x^2 - 4
+    - Entrada: `x**2 - 4`
 
-        Si tienes alguna pregunta o necesitas ayuda adicional, no dudes en consultar la documentación de SymPy.
+    - Ecuación con fracción: (1/3)x + 5
+    - Entrada: `(1/3)*x + 5`
 
-        """
+    - Ecuación con paréntesis: (x + 2)(x - 1)
+    - Entrada: `(x + 2)*(x - 1)`
 
-        manual_label = QLabel(manual_text, manual_dialog)
-        manual_label.setAlignment(Qt.AlignLeft)
-        manual_label.setWordWrap(True)
-        
-        manual_label.setFont(font)
-        
-        manual_layout.addWidget(manual_label)
-        close_button = QPushButton("Cerrar", manual_dialog)
-        close_button.setFont(QFont("Arial", 20))
-        close_button.clicked.connect(manual_dialog.close)
-        manual_layout.addWidget(close_button, alignment=Qt.AlignRight)
-        manual_dialog.setLayout(manual_layout)
-        manual_dialog.exec_()
+    - Ecuación con raíz cuadrada: sqrt(x) + 2
+    - Entrada: `sqrt(x) + 2`
+
+    - Ecuación con exponente: 2^x + 1
+    - Entrada: `2**x + 1`
+
+    - Ecuación con logaritmo: log(x) + 1
+    - Entrada: `log(x) + 1`
+
+    - Ecuación con valor absoluto: |x| + 1
+    - Entrada: `abs(x) + 1`
+
+    - Ecuación: tan(x) + 2
+    - Entrada: `tan(x) + 2`
+
+    - Ecuación: csc(x) - 3
+    - Entrada: `1/sin(x) - 3`
+    
+    - Ecuación: sec(x) + cot(x)
+    - Entrada: `1/cos(x) + 1/tan(x)`
+
+    - Ecucación: asin(x) + 2
+    - Entrada: `asin(x) + 2`
+
+    - Ecuación: acos(x) - 3
+    - Entrada: `acos(x) - 3`
+
+    - Ecuación: atan(x) + atan(1/x)
+    - Entrada: `atan(x) + atan(1/x)`
+
+    Si tienes alguna pregunta o necesitas ayuda adicional, no dudes en consultar la documentación de SymPy.
+
+    """
+
+    manual_label = QLabel(manual_text, manual_dialog)
+    manual_label.setAlignment(Qt.AlignLeft)
+    manual_label.setWordWrap(True)
+    manual_label.setFont(font)
+
+    scroll_area = QScrollArea(manual_dialog)
+    scroll_area.setWidget(manual_label)
+    scroll_area.setWidgetResizable(True)
+    scroll_area.setFixedHeight(600)
+
+    manual_layout.addWidget(scroll_area)
+    close_button = QPushButton("Cerrar", manual_dialog)
+    close_button.setFont(QFont("Arial", 20))
+    close_button.clicked.connect(manual_dialog.close)
+    manual_layout.addWidget(close_button, alignment=Qt.AlignRight)
+    manual_dialog.setLayout(manual_layout)
+    manual_dialog.exec_()
 
 def verificar_metodo_adecuado(self, f, x0, x1):
-        f_x0 = sp.N(f.subs('x', x0))
-        f_x1 = sp.N(f.subs('x', x1))
-        if f_x0 * f_x1 < 0:
-            return True
-        return False
+    """
+    Verifica si el método de la secante es adecuado para resolver la ecuación.
+
+    Args:
+        self: La instancia de la clase que llama a la función.
+        f (sympy expression): La ecuación a resolver.
+        x0 (float): El primer punto inicial.
+        x1 (float): El segundo punto inicial.
+
+    Returns:
+        bool: True si el método de la secante es adecuado, False en caso contrario.
+    """
+    f_x0 = sp.N(f.subs('x', x0))
+    f_x1 = sp.N(f.subs('x', x1))
+    if f_x0 * f_x1 < 0:
+        return True  
+    return False
+
