@@ -19,6 +19,11 @@ class MetodoSecanteApp(QMainWindow):
     def __init__(self):
         super().__init__()
         initUI(self)
+        self.conclusion_label = QLabel(self)
+        self.conclusion_label.setGeometry(10, 450, 700, 50)  # Ajusta las coordenadas y el tamaño según tus necesidades
+        font = QFont("Arial", 12)
+        self.conclusion_label.setFont(font)
+        self.conclusion_label.setAlignment(Qt.AlignCenter)
 
     def calcular(self):
         """
@@ -67,6 +72,17 @@ class MetodoSecanteApp(QMainWindow):
                     item = QTableWidgetItem(str(valor))
                     self.resultado_table.setItem(i, j, item)
             self.canvas.plot_graph(f, x_vals, f_vals, x0, x1)
+
+            # Muestra el mensaje de conclusión
+            if x_vals:
+                xi_final = x_vals[-1]
+                ea_final = self.resultado_table.item(self.resultado_table.rowCount() - 1, 3).text()
+                mensaje = f"El valor de xi correspondiente para Ea <= {tol:.4f}% es {xi_final:.4f} (Ea = {ea_final} %)"
+                self.conclusion_label.setText(mensaje)  # Muestra la conclusión en la etiqueta
+
+            else:
+                self.mostrar_alerta("No se encontraron soluciones.")
+
         else:
             self.mostrar_alerta("El método de la secante no es adecuado para esta función y/o valores iniciales.")
 
